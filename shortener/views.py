@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from .models import Link
 from .serializers import LinkSerializer
 from django_filters.rest_framework import DjangoFilterBackend
+from django.views.generic import TemplateView
+from django.urls import reverse
 
 
 class LinkViewSet(viewsets.ModelViewSet):
@@ -40,3 +42,14 @@ class LinkViewSet(viewsets.ModelViewSet):
 def redirect_url(request, shortened):
     link = get_object_or_404(Link, shortened=shortened)
     return redirect(link.long_url)
+
+
+class ScalarDocsView(TemplateView):
+    template_name = "scalar.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["schema_url"] = self.request.build_absolute_uri(
+            reverse("schema")  # the SpectacularJSONView we wired earlier
+        )
+        return ctx

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>URL-Shortener – Scalar Docs</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="scalar-app"></div>
+
+    <!-- Scalar JS bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+
+    <!-- Kick it off -->
+    <script>
+      Scalar.createApiReference("#scalar-app", {
+        url: "{{ schema_url }}", // OpenAPI JSON endpoint
+        proxyUrl: "https://proxy.scalar.com", // avoids CORS if you ever need it
+      });
+    </script>
+  </body>
+</html>
