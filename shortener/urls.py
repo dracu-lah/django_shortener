@@ -8,5 +8,5 @@ router.register(r"", LinkViewSet, basename="link")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("<str>:shortened/open/", redirect_url, name="redirect"),
+    path("<str:shortened>/open/", redirect_url, name="redirect"),
 ]

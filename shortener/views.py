@@ -5,12 +5,15 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Link
 from .serializers import LinkSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
     lookup_field = "shortened"
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["email"]
 
     def get_queryset(self):
         email = self.request.query_params.get("email")

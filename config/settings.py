@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "shortener",
     "drf_spectacular",
+    "django_filters",
 ]
 
 # Add DRF defaults (JSON renderer, ModelViewSet, etc.)
@@ -59,6 +60,7 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.JSONParser",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 SPECTACULAR_SETTINGS = {
     "TITLE": "URL-Shortener API",

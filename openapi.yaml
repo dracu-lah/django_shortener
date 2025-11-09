@@ -1,0 +1,217 @@
+openapi: 3.0.3
+info:
+  title: URL-Shortener API
+  version: 1.0.0
+  description: Create, list and delete short links.
+paths:
+  /api/shortner:
+    get:
+      operationId: shortner_list
+      tags:
+      - shortner
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+          description: ''
+    post:
+      operationId: shortner_create
+      tags:
+      - shortner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Link'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+          description: ''
+  /api/shortner{shortened}/:
+    get:
+      operationId: shortner_retrieve
+      parameters:
+      - in: path
+        name: shortened
+        schema:
+          type: string
+        required: true
+      tags:
+      - shortner
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+          description: ''
+    put:
+      operationId: shortner_update
+      parameters:
+      - in: path
+        name: shortened
+        schema:
+          type: string
+        required: true
+      tags:
+      - shortner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Link'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+          description: ''
+    patch:
+      operationId: shortner_partial_update
+      parameters:
+      - in: path
+        name: shortened
+        schema:
+          type: string
+        required: true
+      tags:
+      - shortner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLink'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+          description: ''
+    delete:
+      operationId: shortner_destroy
+      parameters:
+      - in: path
+        name: shortened
+        schema:
+          type: string
+        required: true
+      tags:
+      - shortner
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/shortner{str}:shortened/open/:
+    get:
+      operationId: shortner:shortened_open_retrieve
+      parameters:
+      - in: path
+        name: str
+        schema:
+          type: string
+        required: true
+      tags:
+      - shortner:shortened
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    Link:
+      type: object
+      properties:
+        shortened:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        long_url:
+          type: string
+          format: uri
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created
+      - email
+      - long_url
+      - shortened
+      - updated
+    PatchedLink:
+      type: object
+      properties:
+        shortened:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        long_url:
+          type: string
+          format: uri
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
