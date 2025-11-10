@@ -1,8 +1,8 @@
 import uuid
 from django.shortcuts import redirect, get_object_or_404
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.serializers import ValidationError
 from .models import Link
 from .serializers import LinkSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -19,17 +19,16 @@ class LinkViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         email = self.request.query_params.get("email")
+        qs = super().get_queryset()
         if email:
-            return self.queryset.filter(email=email)
-        return self.queryset.none()
+            return qs.filter(email=email)
+        return qs.none()
 
     def perform_create(self, serializer):
         custom = self.request.data.get("customShortenedUrl")
         if custom:
             if Link.objects.filter(shortened=custom).exists():
-                raise serializer.ValidationError(
-                    {"customShortenedUrl": "Already taken."}
-                )
+                raise ValidationError({"customShortenedUrl": "Already taken."})
 
             shortened = custom
         else:

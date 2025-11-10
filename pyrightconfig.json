@@ -1,0 +1,12 @@
+{
+  "venvPath": "__VENV_PARENT__",
+  "venv": "__VENV_NAME__",
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "reportMissingTypeStubs": false,
+  "extraPaths": ["src", "."],
+  "analysis": {
+    "autoSearchPaths": true,
+    "useLibraryCodeForTypes": true
+  }
+}

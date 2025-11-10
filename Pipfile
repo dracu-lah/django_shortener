@@ -9,8 +9,13 @@ djangorestframework = "*"
 python-dotenv = "*"
 drf-spectacular = "*"
 django-filter = "*"
+django-types = "*"
 
 [dev-packages]
+django-stubs = "*"
+djangorestframework-stubs = "*"
+types-requests = "*"
+types-pyyaml = "*"
 
 [requires]
 python_version = "3.13"
