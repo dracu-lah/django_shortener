@@ -26,14 +26,14 @@ class LinkViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         custom = self.request.data.get("customShortenedUrl")
+        qs = super().get_queryset()
         if custom:
-            if Link.objects.filter(shortened=custom).exists():
+            if qs.filter(shortened=custom).exists():
                 raise ValidationError({"customShortenedUrl": "Already taken."})
+            serializer.save(shortened=custom)
 
-            shortened = custom
         else:
             shortened = uuid.uuid4().hex[:8]
-
             serializer.save(shortened=shortened)
 
 

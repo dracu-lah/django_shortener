@@ -29,5 +29,5 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
-    path("api/scalar-docs/", ScalarDocsView.as_view(), name="scalar-docs"),
+    path("", ScalarDocsView.as_view(), name="scalar-docs"),
 ]
