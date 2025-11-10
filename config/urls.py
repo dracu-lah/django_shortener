@@ -22,7 +22,7 @@ from shortener.views import ScalarDocsView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/shortner", include("shortener.urls")),
+    path("api/shortner/", include("shortener.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),  # JSON/YAML
     path(
         "api/docs/",

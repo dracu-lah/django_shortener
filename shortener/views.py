@@ -14,6 +14,7 @@ class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
     lookup_field = "shortened"
+
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["email"]
 
@@ -25,11 +26,11 @@ class LinkViewSet(viewsets.ModelViewSet):
         return qs.none()
 
     def perform_create(self, serializer):
-        custom = self.request.data.get("customShortenedUrl")
+        custom = self.request.data.get("custom")
         qs = super().get_queryset()
         if custom:
             if qs.filter(shortened=custom).exists():
-                raise ValidationError({"customShortenedUrl": "Already taken."})
+                raise ValidationError({"custom": "Already taken."})
             serializer.save(shortened=custom)
 
         else:
