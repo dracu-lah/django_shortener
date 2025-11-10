@@ -26,7 +26,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         return qs.none()
 
     def perform_create(self, serializer):
-        custom = self.request.data.get("custom")
+        custom = serializer.validated_data.get("custom")
         qs = super().get_queryset()
         if custom:
             if qs.filter(shortened=custom).exists():
